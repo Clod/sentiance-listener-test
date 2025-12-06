@@ -34,12 +34,14 @@
         "expo-notifications",
         {
           "icon": "./assets/images/notification-icon.png",
-          "color": "#ffffff",
-          "sounds": [
-            "./assets/images/notification-sound.wav"
-          ]
+          "color": "#ffffff"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "5bf7e388-2d3e-4e14-b6bf-a7fadec6a719"
+      }
+    }
   }
 }
