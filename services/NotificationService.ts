@@ -7,6 +7,8 @@ Notifications.setNotificationHandler({
     shouldShowAlert: true,
     shouldPlaySound: true,
     shouldSetBadge: true,
+    shouldShowBanner: true,
+    shouldShowList: true,
   }),
 });
 
@@ -103,6 +105,70 @@ class NotificationService {
   cancelAll = async () => {
     await Notifications.cancelAllScheduledNotificationsAsync();
   };
+
+  // Programar notificación para el futuro (funciona incluso si la app se cierra)
+  scheduleDelayedNotification = async (delaySeconds: number) => {
+    const random = Math.random();
+
+    if (random < 0.5) {
+      // Crash event
+      const crashEvent = {
+        type: 'crash_detected',
+        time: Date.now() + (delaySeconds * 1000),
+        location: {
+          latitude: -34.6037 + (Math.random() - 0.5) * 0.1,
+          longitude: -58.3816 + (Math.random() - 0.5) * 0.1,
+        },
+        severity: ['LOW', 'MEDIUM', 'HIGH'][Math.floor(Math.random() * 3)],
+        magnitude: 2.5 + Math.random() * 5,
+        confidence: 50 + Math.random() * 50,
+      };
+
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: '🚨 Colisión Detectada',
+          body: `Severidad: ${crashEvent.severity}. Toca para ver detalles.`,
+          sound: true,
+          priority: Notifications.AndroidNotificationPriority.HIGH,
+          data: {
+            screen: 'CrashDetail',
+            eventType: crashEvent.type,
+            eventData: crashEvent,
+          },
+        },
+        trigger: { type: 'timeInterval', seconds: delaySeconds, repeats: false } as any,
+      });
+
+      console.log(`⏰ Notificación de crash programada para ${delaySeconds} segundos`);
+    } else {
+      // Timeline event
+      const transportModes = ['CAR', 'BUS', 'TRAIN', 'WALKING'];
+      const timelineEvent = {
+        type: 'transport_started',
+        time: Date.now() + (delaySeconds * 1000),
+        transportMode: transportModes[Math.floor(Math.random() * transportModes.length)],
+        location: 'Buenos Aires, Argentina',
+      };
+
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: '🚗 Viaje Iniciado',
+          body: `Modo: ${timelineEvent.transportMode}. Toca para ver detalles.`,
+          sound: true,
+          priority: Notifications.AndroidNotificationPriority.HIGH,
+          data: {
+            screen: 'TimelineDetail',
+            eventType: timelineEvent.type,
+            eventData: timelineEvent,
+          },
+        },
+        trigger: { type: 'timeInterval', seconds: delaySeconds, repeats: false } as any,
+      });
+
+      console.log(`⏰ Notificación de timeline programada para ${delaySeconds} segundos`);
+    }
+  };
 }
 
 export default new NotificationService();
+

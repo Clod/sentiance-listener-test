@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MockSdkSimulator from '../services/MockSdkSimulator';
+import NotificationService from '../services/NotificationService';
 
 const HomeScreen = ({ navigation }: any) => {
   return (
@@ -17,12 +18,28 @@ const HomeScreen = ({ navigation }: any) => {
         <Text style={styles.buttonText}>🚨 Simular Crash Ahora</Text>
       </TouchableOpacity>
 
+      <TouchableOpacity
+        style={[styles.button, styles.scheduleButton]}
+        onPress={async () => {
+          await NotificationService.scheduleDelayedNotification(30);
+          alert('✅ Notificación programada para 30 segundos.\n\nPuedes cerrar la app ahora.');
+        }}
+      >
+        <Text style={styles.buttonText}>⏰ Programar Notificación (30s)</Text>
+      </TouchableOpacity>
+
       <View style={styles.info}>
         <Text style={styles.infoText}>
-          💡 La app generará eventos automáticamente cada 15 segundos
+          💡 La app genera eventos automáticamente cada 15 segundos (solo en foreground)
         </Text>
         <Text style={styles.infoText}>
-          📱 Recibirás notificaciones que puedes tocar para ver detalles
+          ⏰ El botón verde programa una notificación que llegará en 30 segundos
+        </Text>
+        <Text style={styles.infoText}>
+          🔒 La notificación programada funciona INCLUSO si cierras la app
+        </Text>
+        <Text style={styles.infoText}>
+          📱 Toca las notificaciones para ver los detalles del evento
         </Text>
       </View>
     </View>
@@ -59,6 +76,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+  },
+  scheduleButton: {
+    backgroundColor: '#34C759',
   },
   buttonText: {
     color: '#fff',
