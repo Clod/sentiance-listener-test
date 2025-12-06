@@ -30,10 +30,10 @@ const HomeScreen = ({ navigation }: any) => {
 
       <View style={styles.info}>
         <Text style={styles.infoText}>
-          💡 La app genera eventos automáticamente cada 15 segundos (solo en foreground)
+          🚨 Botón rojo: Simula un crash inmediatamente
         </Text>
         <Text style={styles.infoText}>
-          ⏰ El botón verde programa una notificación que llegará en 30 segundos
+          ⏰ Botón verde: Programa notificación para 30 segundos
         </Text>
         <Text style={styles.infoText}>
           🔒 La notificación programada funciona INCLUSO si cierras la app

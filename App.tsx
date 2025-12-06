@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import NotificationService from './services/NotificationService';
-import MockSdkSimulator from './services/MockSdkSimulator';
-import HomeScreen from './screens/HomeScreen';
+import React, { useEffect, useRef } from 'react';
 import CrashDetailScreen from './screens/CrashDetailScreen';
+import HomeScreen from './screens/HomeScreen';
 import TimelineDetailScreen from './screens/TimelineDetailScreen';
+import MockSdkSimulator from './services/MockSdkSimulator';
+import NotificationService from './services/NotificationService';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,14 +37,15 @@ export default function App() {
         }
       );
 
-      // Iniciar simulación automática cada 15 segundos
-      MockSdkSimulator.startSimulation(15000);
+      // Desactivado: Ya no necesitamos simulación automática
+      // Solo usamos notificaciones programadas con el botón verde
+      // MockSdkSimulator.startSimulation(15000);
 
       return () => {
         cleanup();
         crashSubscription.remove();
         timelineSubscription.remove();
-        MockSdkSimulator.stopSimulation();
+        // MockSdkSimulator.stopSimulation();
       };
     };
 
