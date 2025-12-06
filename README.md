@@ -238,7 +238,7 @@ eas build --profile preview --platform android
 
 ### Cómo Probar
 
-![download_link](readme_images/download_link.png)
+<img src="readme_images/download_link.png" alt="download_link" width="33%">
 
 1. **Instala el build** en un dispositivo Android físico
 2. **Abre la app** y otorga permisos de notificaciones
